@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Status</title>
+</head>
+<body>
+
+<h2>Check Application Status</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="mobile" placeholder="Enter Mobile Number" required>
+    <button type="submit">Check Status</button>
+</form>
+
+{% if application %}
+    <hr>
+
+    <h3>Status: {{ application.status|title }}</h3>
+    <p><strong>Certificate:</strong> {{ application.certificate_type }}</p>
+
+    {% if application.remarks %}
+        <p><strong>Message from Panchayat:</strong></p>
+        <p style="color:red;">{{ application.remarks }}</p>
+    {% endif %}
+
+    {% if application.status == 'rejected' or application.status == 'correction' %}
+        <hr>
+        <p><strong>Next Step:</strong></p>
+        <p>
+            Upar aapne je details bataveli chhe te sudhari ne
+            <a href="/">navi application fari submit karo</a>.
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if application %}
+    <hr>
+    <p><strong>Notification Message:</strong></p>
+    <p style="background:#f4f4f4; padding:10px;">
+        {{ application.notification_message }}
+    </p>
+{% endif %}
+
+
+</body>
+</html>

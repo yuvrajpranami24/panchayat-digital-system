@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply for Certificate</title>
+</head>
+<body>
+
+<h2>Apply for Certificate</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <input type="text" name="name" placeholder="Full Name" required><br><br>
+
+    <input type="text" name="mobile" placeholder="Mobile Number" required><br><br>
+
+    <textarea name="address" placeholder="Address" required></textarea><br><br>
+
+    <select name="certificate_type" required>
+        <option value="">Select Certificate</option>
+        <option value="Residence">Residence Certificate</option>
+        <option value="Income">Income Certificate</option>
+        <option value="Caste">Caste Certificate</option>
+    </select><br><br>
+
+    <select name="panchayat" required>
+        <option value="">Select Panchayat</option>
+        {% for p in panchayats %}
+            <option value="{{ p.id }}">{{ p.village }} ({{ p.taluka }})</option>
+        {% endfor %}
+    </select><br><br>
+
+    <!-- NEW: Delivery option -->
+    <select name="delivery_type" required>
+        <option value="panchayat">Pickup from Panchayat</option>
+        <option value="taluka">Pickup from Taluka</option>
+        <option value="courier">Courier Delivery</option>
+    </select><br><br>
+
+    <!-- NEW: Document upload -->
+    <input type="file" name="document" required><br><br>
+
+    <button type="submit">Submit Application</button>
+</form>
+
+</body>
+</html>
